@@ -88,6 +88,11 @@ export function render ( criteria ) {
             const title = document.createElement( 'h3' );
             title.innerText = el.title;
             parentDiv.appendChild( title );
+        } else if (el.type === "subtitle") {
+            parentDiv.classList.add( 'subtitle' );
+            const title = document.createElement( 'h4' );
+            title.innerText = el.title;
+            parentDiv.appendChild( title );
         } else {
             parentDiv.classList.add( 'checkbox-container' );
             parentDiv.dataset.active = "true";
