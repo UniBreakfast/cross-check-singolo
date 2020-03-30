@@ -47,17 +47,16 @@ export function render ( criteria ) {
             e.preventDefault();
         } else if ( e.target.tagName === "INPUT" ) {
             if ( e.target.checked ) {
-                total += parseInt( e.target.dataset.mod );
-                filteredCriteria[id].checked = true;
-                parent.dataset.active = "false";
+              total += parseInt( e.target.dataset.mod );
+              filteredCriteria[id].checked = true;
+              parent.dataset.active = "false";
             } else {
-                total += -1 * parseInt( e.target.dataset.mod );
-                filteredCriteria[id].checked = false;
+              total += -1 * parseInt( e.target.dataset.mod );
+              filteredCriteria[id].checked = false;
             }
             if ( e.target.dataset.type === "main" ) {
-
-                if ( e.target.checked ) parent.dataset.active = "false";
-                filteredCriteria[0].checked = e.target.checked;
+              if ( e.target.checked ) parent.dataset.active = "false";
+              filteredCriteria[0].checked = e.target.checked;
             }
 
 
@@ -66,6 +65,32 @@ export function render ( criteria ) {
                 getFeedback( filteredCriteria );
             } else {
                 scoreboard.innerHTML = total;
+            }
+
+            if (filteredCriteria[id].checked && filteredCriteria[id].related) {
+              filteredCriteria[id].related.forEach(id => {
+                const input = document.querySelector(`input[id="${id}"]`);
+                if (input) {
+                  input.addEventListener('click', disableClick);
+                  input.parentElement.addEventListener('click', disableClick);
+                  if (input.checked) {
+                    input.checked = false;
+                    total += -1 * parseInt( input.dataset.mod );
+                    filteredCriteria[id].checked = false;
+                    scoreboard.innerHTML = total;
+                  }
+                  input.parentElement.parentElement.dataset.active = "false"
+                }
+              });
+            } else if (!filteredCriteria[id].checked && filteredCriteria[id].related) {
+              filteredCriteria[id].related.forEach(id => {
+                const input = document.querySelector(`input[id="${id}"]`);
+                if (input) {
+                  input.removeEventListener('click', disableClick);
+                  input.parentElement.removeEventListener('click', disableClick);
+                  input.parentElement.parentElement.dataset.active = "true"
+                }
+              });
             }
 
             // if click while modal opened then re-render it
@@ -78,6 +103,11 @@ export function render ( criteria ) {
         else reset.classList.add( 'hidden' );
 
     } )
+
+    function disableClick(e) {
+        e.stopImmediatePropagation();
+        e.preventDefault();
+    }
 
     function renderCriterion ( el, i, flag ) {
 
