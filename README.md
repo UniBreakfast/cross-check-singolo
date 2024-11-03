@@ -1,4 +1,4 @@
-# Cross-Check Singolo - удобная проверка Singolo. Онлайн чек-лист
+# [Cross-Check Singolo](https://github.com/UniBreakfast/cross-check-singolo) - удобная проверка Singolo. Онлайн чек-лист
 
 ## Проверка таска Singolo в несколько кликов мышкой. Удобное отслеживание текущей проверки. Мгновенное получение отзыва для вставки в комментарии к работе.
 
